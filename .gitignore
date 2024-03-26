@@ -1,0 +1,30 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/admin_front/node_modules/
+
+# next.js
+/admin_front/.next/
+/admin_front/out/
+
+# production
+/admin_front/build
+
+# misc
+/admin_front/.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env*.local
+
+# vercel
+/admin_front/.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
