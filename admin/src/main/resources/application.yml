@@ -8,6 +8,13 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true #开启驼峰命名和下划线命名的自动转换
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-
+mybatis-plus:
+  configuration:
+    log-impl=org:
+      apache:
+        ibatis:
+          logging:
+            stdout:
+              StdOutImpl:org.apache.ibatis.logging.stdout.StdOutImpl
 server:
   port: 8080

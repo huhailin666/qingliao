@@ -14,15 +14,14 @@ import java.time.LocalDateTime;
 @Data
 public class UserInfo {
     @NotNull
-    private String uuid;//主键uuid
-    private String id;//用户id
+    private String id;//主键id
+    private String uid;// 用户id
     @NotEmpty
     @Pattern(regexp = "^\\S{1,20}$")
     private String username;//用户名
     private String avatar;//用户名
     private Date born;// 出生日期
     private int gender;// 性别
-    private String phone;//手机号
     private LocalDateTime createTime;//创建时间
     private LocalDateTime updateTime;//更新时间
 }
