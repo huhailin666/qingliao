@@ -1,18 +1,39 @@
-import { action, makeObservable, observable } from 'mobx'
+import {action, makeObservable, observable} from 'mobx'
+import Service from "./service";
 
-
+const PAGE_SIZE = 10;
 
 class Store {
-    constructor(props: any) {
-        Object.assign(this, props)
-        makeObservable(this)
+    service: Service;
+    @observable
+    userInfoList = [];
+    @observable page = 1;
+
+    constructor(props?: any) {
+        if (props) {
+            Object.assign(this, props);
+        }
+        this.service = new Service();
+        makeObservable(this);
     }
-    @observable count: number = 0
-    @action addCount(): void {
-        this.count++
+
+    async initData() {
+        await this.queryUserInfoList();
     }
-    @action reduceCount(): void {
-        this.count--
+
+    async queryUserInfoList() {
+        const res = await this.service.queryUserList();
+        this.userInfoList = res?.records || [];
+    }
+
+    @action
+    async updateUser(user: User) {
+        await this.service.updateUser(user);
+    }
+
+    @action
+    async addUser(user: User) {
+        await this.service.addUser(user);
     }
 }
 

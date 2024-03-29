@@ -1,24 +1,24 @@
-import { MobXProviderContext, Provider, observer } from "mobx-react";
+import { Provider, observer} from "mobx-react";
 import Store from "./store";
-import React, { useContext } from "react";
-import useStore from "@src/store";
+import React, {useContext} from "react";
+import UserInfoTable from "./widget/UserInfoTable";
+import {App} from "antd";
 
 function Home() {
-    const store = useStore<Store>();
-    console.log(111, store);
 
-    return <main>
-        <button onClick={() => store.addCount()}>+</button>
-        <h1>{store.count}</h1>
-        <button onClick={() => store.reduceCount()}>-</button>
-    </main>
+    return <App>
+        <UserInfoTable/>
+    </App>
 }
+
 
 const Comp = observer(Home);
 const appProvider = (props: any) => {
-    const store = new Store(props);
+
+    const store = new Store(props.store);
     return <Provider store={store}>
-        <Comp />
+
+        <Comp/>
     </Provider>
 
 }
