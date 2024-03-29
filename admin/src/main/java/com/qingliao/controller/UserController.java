@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/admin/user_info")
 public class UserController {
@@ -26,8 +27,10 @@ public class UserController {
         return Result.success();
     }
 
-    @PostMapping("update")
+    @PostMapping("/update")
     public Result update(@RequestBody UserInfo user) {
+        if (user.getId() == null)
+            return Result.error("params error");
         userInfoService.update(user);
         return Result.success();
     }
