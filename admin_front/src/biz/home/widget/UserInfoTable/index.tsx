@@ -3,6 +3,7 @@ import useStore from "@src/store";
 import Store from "../../store";
 import {App, Button, Space, Modal, Table} from "antd";
 import CreateUser from "../../components/CreateUserDialog";
+import {observer} from "mobx-react";
 
 const CLUMNS = [{
     title: 'id',
@@ -39,7 +40,8 @@ const CLUMNS = [{
     }]
 
 function UserInfoTable() {
-    const {userInfoList} = useStore<Store>();
+    const {userInfoList, total, page, queryUserInfoList} = useStore<Store>();
+    console.log(111, total)
     // console.log(userInfoList);
     const {message, modal, notification} = App.useApp();
     // console.log(111, modal);
@@ -88,12 +90,19 @@ function UserInfoTable() {
                 ),
             },
         ]), [])
+    const onPageChange = (pageNumber: number) => {
+        console.log(pageNumber, 333);
 
+        queryUserInfoList(pageNumber);
+    }
     return <div>
         <Button type="primary" onClick={createUser}>新增用户</Button>
-        <Table columns={cloums} dataSource={dataSource}/>
+        <Table
+            // title={() => "用户列表"}
+            columns={cloums} dataSource={dataSource}
+            pagination={{total, defaultCurrent: page, onChange: onPageChange, position: ['topRight']}}/>
     </div>
 }
 
 
-export default UserInfoTable
+export default observer(UserInfoTable)

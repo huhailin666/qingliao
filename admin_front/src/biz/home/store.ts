@@ -5,9 +5,11 @@ const PAGE_SIZE = 10;
 
 class Store {
     service: Service;
+    @observable page = 1;
+
+    @observable total = 0;
     @observable
     userInfoList = [];
-    @observable page = 1;
 
     constructor(props?: any) {
         if (props) {
@@ -18,12 +20,19 @@ class Store {
     }
 
     async initData() {
-        await this.queryUserInfoList();
+        await this.queryUserInfoList(1);
     }
 
-    async queryUserInfoList() {
-        const res = await this.service.queryUserList();
+    @action
+    queryUserInfoList = async (page: number) => {
+        this.page = page;
+        const res = await this.service.queryUserList(
+            {page, size: PAGE_SIZE}
+        );
         this.userInfoList = res?.records || [];
+        if (res?.total) {
+            this.total = res?.total;
+        }
     }
 
     @action
@@ -35,6 +44,7 @@ class Store {
     async addUser(user: User) {
         await this.service.addUser(user);
     }
+
 }
 
 export default Store;

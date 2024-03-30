@@ -6,12 +6,14 @@ const USER_INFO_UPDATE = "/admin/user_info/update";
 
 class Service {
     async queryUserList(param) {
-        return Request.get(USER_INFO, {page: 1, size: 10});
+        return Request.get(USER_INFO, param);
     }
-    async updateUser(user:User) {
+
+    async updateUser(user: User) {
         return Request.post(USER_INFO_UPDATE, user);
     }
-    async addUser(user:User) {
+
+    async addUser(user: User) {
         return Request.post(USER_INFO, user);
     }
 }
