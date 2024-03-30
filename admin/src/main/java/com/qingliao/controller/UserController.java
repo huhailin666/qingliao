@@ -1,13 +1,10 @@
 package com.qingliao.controller;
 
-import com.qingliao.mapper.UserInfoMapper;
 import com.qingliao.pojo.Result;
 import com.qingliao.pojo.UserInfo;
-import com.qingliao.service.UserInfoService;
+import com.qingliao.service.impl.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @CrossOrigin
 @RestController

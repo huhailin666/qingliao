@@ -1,15 +1,9 @@
 package com.qingliao;
 
-import com.qingliao.mapper.UserInfoMapper;
-import com.qingliao.pojo.Response.UserList;
-import com.qingliao.pojo.UserInfo;
-import com.qingliao.service.UserInfoService;
+import com.qingliao.service.impl.UserInfoService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.List;
-import java.util.UUID;
 
 /**
  * Unit test for simple App.
