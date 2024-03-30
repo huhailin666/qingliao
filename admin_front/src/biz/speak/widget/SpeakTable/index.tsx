@@ -47,9 +47,8 @@ const CLUMNS = [{
 
 function UserInfoTable() {
     const {userInfoList, total, page, queryUserInfoList} = useStore<Store>();
-    console.log(111, total)
     // console.log(userInfoList);
-    const {message, modal, notification} = App.useApp();
+    const {modal} = App.useApp();
     // console.log(111, modal);
 
     const dataSource = useMemo(() => {
@@ -66,7 +65,7 @@ function UserInfoTable() {
             icon: null
         });
         xx.update({
-            content: <CreateUser user={user} type={1} onClose={xx.destroy}/>,
+            // content: <CreateUser user={user} type={1} onClose={xx.destroy}/>,
         });
     }
     const cloums = useMemo(() =>
@@ -85,12 +84,12 @@ function UserInfoTable() {
                                 icon: null
                             });
                             xx.update({
-                                content: <CreateUser user={record} onClose={xx.destroy}/>,
+                                // content: <CreateUser user={record} onClose={xx.destroy}/>,
                             });
 
                         }}>编辑</Button>
                         <Button type="primary" onClick={() => {
-                            createUser(record);
+                            // createUser(record);
                         }}>复制用户</Button>
                     </Space>
                 ),
@@ -100,9 +99,8 @@ function UserInfoTable() {
         queryUserInfoList(pageNumber);
     }
     return <div>
-        <Button type="primary" onClick={createUser}>新增用户</Button>
+        {/*<Button type="primary" onClick={createUser}>新增用户</Button>*/}
         <Table
-            // title={() => "用户列表"}
             columns={cloums} dataSource={dataSource}
             pagination={{total, defaultCurrent: page, onChange: onPageChange, position: ['topRight']}}/>
     </div>

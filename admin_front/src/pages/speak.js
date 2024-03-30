@@ -1,6 +1,6 @@
-import Home from '@src/biz/home'
+import Home from '@src/biz/speak'
 import createServerProps from '@src/createServerProps';
-import Store from '@src/biz/home/store'
+import Store from '@src/biz/speak/store'
 
 export default Home;
 const getServerSideProps = createServerProps(Store);

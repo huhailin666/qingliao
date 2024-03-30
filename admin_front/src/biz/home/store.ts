@@ -48,4 +48,3 @@ class Store {
 }
 
 export default Store;
-// export default new Store()
