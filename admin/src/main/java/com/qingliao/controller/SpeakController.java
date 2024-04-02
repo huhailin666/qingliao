@@ -17,9 +17,13 @@ public class SpeakController {
     @Autowired
     private SpeakService service;
 
-    @GetMapping
+    @GetMapping("/list")
     public Result getList(int page, int size, String uid) {
         return Result.success(service.getSpeakList(page, size, uid));
+    }
+    @GetMapping
+    public Result getUserInfo(String id) {
+        return Result.success(service.getById(id));
     }
 
     @PostMapping
