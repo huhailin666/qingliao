@@ -1,4 +1,4 @@
-import useStore from "@src/store";
+import useStore from "@src/store/useStore";
 import Store from "../../store";
 import {useMemo, useState} from "react";
 import {DatePicker, Modal, Select, Space} from "antd";

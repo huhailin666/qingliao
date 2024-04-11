@@ -1,25 +1,28 @@
-import {Store} from "./store";
+import BaseStore from "./store/BaseStore";
 import React, {useEffect} from "react";
-import {Provider,} from "mobx-react";
+import {Provider} from "mobx-react";
 
 interface Props {
     props: {
-        store: Store;
+        store: BaseStore;
         query: Record<string, string>;
     };
-    store: Store;
+    Store: BaseStore;
     comp: React.ReactElement;
 }
 
-const appProvider = ({props, store: CurStore, comp}: Props) => {
-    // let store
-    const store = new CurStore({query: props?.query, ...(props?.store || {})});
-    useEffect(() => {
-        if (props.query.csr) {
-            store.initData();
-        }
-    }, [])
+const appProvider = ({props, Store, comp}: Props) => {
 
+    const store = new Store(props?.store || {});
+
+
+    useEffect(() => {
+        // if (store.query?.csr) {
+        store.initData();
+        // }
+
+    }, [])
+    console.log(222, store)
     return <Provider store={store}>
         {comp}
     </Provider>

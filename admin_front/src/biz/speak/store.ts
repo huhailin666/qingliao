@@ -1,17 +1,19 @@
 import {action, makeObservable, observable} from 'mobx'
 import Service from "./service";
+import BaseStore from "@src/store/BaseStore";
 
 const PAGE_SIZE = 10;
 
-class Store {
+class Store extends BaseStore{
     service: Service;
     @observable page = 1;
 
     @observable total = 0;
     @observable
-    userInfoList = [];
+    speakList = [];
 
     constructor(props?: any) {
+        super();
         if (props) {
             Object.assign(this, props);
         }
@@ -20,30 +22,20 @@ class Store {
     }
 
     async initData() {
-        // await this.queryUserInfoList(1);
+        await this.querySpeakList(1);
     }
 
-    // @action
-    // queryUserInfoList = async (page: number) => {
-    //     this.page = page;
-    //     const res = await this.service.queryUserList(
-    //         {page, size: PAGE_SIZE}
-    //     );
-    //     this.userInfoList = res?.records || [];
-    //     if (res?.total) {
-    //         this.total = res?.total;
-    //     }
-    // }
-    //
-    // @action
-    // async updateUser(user: User) {
-    //     await this.service.updateUser(user);
-    // }
-    //
-    // @action
-    // async addUser(user: User) {
-    //     await this.service.addUser(user);
-    // }
+    @action
+    querySpeakList = async (page: number) => {
+        this.page = page;
+        const res = await this.service.querySpeakList(
+            {page, size: PAGE_SIZE}
+        );
+        this.speakList = res?.records || [];
+        if (res?.total) {
+            this.total = res?.total;
+        }
+    }
 
 }
 

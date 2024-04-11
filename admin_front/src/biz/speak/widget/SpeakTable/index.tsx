@@ -1,39 +1,33 @@
 import React, {useContext, useEffect, useMemo} from "react";
-import useStore from "@src/store";
+import useStore from "@src/store/useStore";
 import Store from "../../store";
 import {App, Button, Space, Modal, Table} from "antd";
-import CreateUser from "../../components/CreateUserDialog";
 import {observer} from "mobx-react";
 
-const CLUMNS = [{
-    title: 'id',
-    dataIndex: 'id',
-    key: 'id',
-},
+const COLUMNS = [
     {
-        title: '昵称',
-        dataIndex: 'username',
-        key: 'username',
+        title: 'id',
+        dataIndex: 'id',
+        key: 'id',
     },
     {
-        title: '头像',
-        dataIndex: 'avatar',
-        key: 'avatar',
+        title: 'uid',
+        dataIndex: 'uid',
+        key: 'uid',
+    },
+    {
+        title: '内容',
+        dataIndex: 'text',
+        key: 'text',
+    },
+    {
+        title: '点赞数',
+        dataIndex: 'favor',
+        key: 'favor',
     }, {
-        title: '出生',
-        dataIndex: 'born',
-        key: 'born',
-    },
-    {
-        title: '性别',
-        dataIndex: 'gender',
-        key: 'gender',
-        render: (_, record) => {
-            if (record.gender) {
-                return record.gender === 1 ? '男' : '女'
-            }
-            return '-'
-        }
+        title: '评论数',
+        dataIndex: 'reviewNum',
+        key: 'reviewNum',
     },
     {
         title: '创建时间',
@@ -45,17 +39,15 @@ const CLUMNS = [{
         key: 'updateTime',
     }]
 
-function UserInfoTable() {
-    const {userInfoList, total, page, queryUserInfoList} = useStore<Store>();
-    // console.log(userInfoList);
+function SpeakTable() {
+    const {speakList, total, page, querySpeakList} = useStore<Store>();
     const {modal} = App.useApp();
-    // console.log(111, modal);
 
     const dataSource = useMemo(() => {
-        return userInfoList?.map((item, index) => {
+        return speakList?.map((item, index) => {
             return {...item, key: index}
         })
-    }, [userInfoList])
+    }, [speakList])
     const createUser = (user: User) => {
         const xx = modal.confirm({
             footer: null,
@@ -68,8 +60,8 @@ function UserInfoTable() {
             // content: <CreateUser user={user} type={1} onClose={xx.destroy}/>,
         });
     }
-    const cloums = useMemo(() =>
-        CLUMNS.concat([
+    const columns = useMemo(() =>
+        COLUMNS.concat([
             {
                 title: '操作',
                 key: 'action',
@@ -78,7 +70,7 @@ function UserInfoTable() {
                         <Button type="primary" onClick={() => {
                             const xx = modal.confirm({
                                 footer: null,
-                                title: '修改用户',
+                                title: '修改说说内容',
                                 content: null,
                                 closable: true,
                                 icon: null
@@ -96,15 +88,15 @@ function UserInfoTable() {
             },
         ]), [])
     const onPageChange = (pageNumber: number) => {
-        queryUserInfoList(pageNumber);
+        querySpeakList(pageNumber);
     }
     return <div>
         {/*<Button type="primary" onClick={createUser}>新增用户</Button>*/}
         <Table
-            columns={cloums} dataSource={dataSource}
+            columns={columns} dataSource={dataSource}
             pagination={{total, defaultCurrent: page, onChange: onPageChange, position: ['topRight']}}/>
     </div>
 }
 
 
-export default observer(UserInfoTable)
+export default observer(SpeakTable)

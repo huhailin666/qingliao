@@ -1,10 +1,12 @@
 import Request from '@src/utils/request'
 
 
+const USER_INFO = "/admin/user_info";
 const SPEAK_LIST = "/admin/speak";
-// const USER_INFO_UPDATE = "/admin/user_info/update";
-
 class Service {
+    async queryUserInfo(param) {
+        return Request.get(USER_INFO, param);
+    }
     async querySpeakList(param) {
         return Request.get(SPEAK_LIST, param);
     }

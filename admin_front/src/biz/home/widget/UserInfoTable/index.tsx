@@ -1,11 +1,12 @@
 import React, {useContext, useEffect, useMemo} from "react";
-import useStore from "@src/store";
+import useStore from "@src/store/useStore";
 import Store from "../../store";
 import {App, Button, Space, Modal, Table} from "antd";
 import CreateUser from "../../components/CreateUserDialog";
 import {observer} from "mobx-react";
+import {useRouter} from "next/router";
 
-const CLUMNS = [{
+const COLUMNS = [{
     title: 'id',
     dataIndex: 'id',
     key: 'id',
@@ -46,11 +47,12 @@ const CLUMNS = [{
     }]
 
 function UserInfoTable() {
-    const {userInfoList, total, page, queryUserInfoList} = useStore<Store>();
-    console.log(111, total)
+    const store = useStore<Store>();
+    const {userInfoList, total, page, queryUserInfoList} = store;
+
+    console.log(111,store, total, store.total)
     // console.log(userInfoList);
-    const {message, modal, notification} = App.useApp();
-    // console.log(111, modal);
+    const {modal} = App.useApp();
 
     const dataSource = useMemo(() => {
         return userInfoList?.map((item, index) => {
@@ -69,8 +71,9 @@ function UserInfoTable() {
             content: <CreateUser user={user} type={1} onClose={xx.destroy}/>,
         });
     }
-    const cloums = useMemo(() =>
-        CLUMNS.concat([
+    const router = useRouter();
+    const colums = useMemo(() =>
+        COLUMNS.concat([
             {
                 title: '操作',
                 key: 'action',
@@ -87,11 +90,13 @@ function UserInfoTable() {
                             xx.update({
                                 content: <CreateUser user={record} onClose={xx.destroy}/>,
                             });
-
                         }}>编辑</Button>
                         <Button type="primary" onClick={() => {
-                            createUser(record);
-                        }}>复制用户</Button>
+                            router.push("/user_info?id="+record?.id)
+                        }}>查看用户详情</Button>
+                        {/*<Button type="primary" onClick={() => {*/}
+                        {/*    createUser(record);*/}
+                        {/*}}>复制用户</Button>*/}
                     </Space>
                 ),
             },
@@ -103,7 +108,7 @@ function UserInfoTable() {
         <Button type="primary" onClick={createUser}>新增用户</Button>
         <Table
             // title={() => "用户列表"}
-            columns={cloums} dataSource={dataSource}
+            columns={colums} dataSource={dataSource}
             pagination={{total, defaultCurrent: page, onChange: onPageChange, position: ['topRight']}}/>
     </div>
 }
